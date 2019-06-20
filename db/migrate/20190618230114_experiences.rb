@@ -1,9 +1,13 @@
+require 'rest-client'
+require 'pry'
+
 class Experiences < ActiveRecord::Migration[5.2]
   def change
     create_table :experiences do |t|
-      t.string :reivew
-      t.string :rating
-      t.boolean :rvsp?
+      t.belongs_to :event, index: true
+      t.belongs_to :user, index: true
+      t.string :review
+      t.integer :rating
     end
   end
 end

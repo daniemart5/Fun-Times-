@@ -17,16 +17,16 @@ ActiveRecord::Schema.define(version: 2019_06_18_230130) do
     t.string "location"
     t.datetime "date"
     t.integer "price"
+    t.string "kind"
   end
 
   create_table "experiences", force: :cascade do |t|
-    t.string "reivew"
+    t.integer "event_id"
+    t.integer "user_id"
+    t.string "review"
     t.string "rating"
-    t.boolean "rvsp?"
-  end
-
-  create_table "locations", force: :cascade do |t|
-    t.string "city_name"
+    t.index ["event_id"], name: "index_experiences_on_event_id"
+    t.index ["user_id"], name: "index_experiences_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

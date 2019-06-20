@@ -1,9 +1,6 @@
 require_relative '../config/environment'
 
-puts "hello world"
-
-
-aa = User.new('mike')
-
-binding.pry
-0
+cli = CommandLineInterface.new
+cli.message
+cli.the_purpose
+cli.the_question
