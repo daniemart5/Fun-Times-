@@ -8,6 +8,7 @@ class Experiences < ActiveRecord::Migration[5.2]
       t.belongs_to :user, index: true
       t.string :review
       t.integer :rating
+      t.integer :doAgain? 
     end
   end
 end

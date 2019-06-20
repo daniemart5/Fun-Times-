@@ -6,7 +6,6 @@ class Events < ActiveRecord::Migration[5.2]
       t.string :name
       t.string :location
       t.datetime :date
-      t.integer :price
       t.string :kind
     end
   end
