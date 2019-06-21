@@ -5,9 +5,9 @@ class CommandLineInterface
     def message
       puts "Welcome to Fun Times!"
       puts "Enter your name to get started:"
-        name = gets.chomp
-        @@user_new = User.create(name: name)
-      puts "Welcome #{name}!"
+        @@name = gets.chomp
+        @@user_new = User.create(name: @@name)
+      puts "Welcome #{@@name}!"
     end
 
     def the_purpose
@@ -22,10 +22,10 @@ class CommandLineInterface
         when  nil
           puts "Sorry not serving that city :C"
         else
-      puts "Awesome ! #{city_name} is a great place! :)"
-      puts "Here you go!"
+          puts "Awesome ! #{city_name} is a great place! :)"
+          puts "Here you go!"
 
-      url = "https://app.ticketmaster.com/discovery/v2/events.json?countryCode=US&city=#{@@city_name}&apikey=l1YTnmKzLOimbir2sDgp9G42YeeGkyAj"
+      url = "https://app.ticketmaster.com/discovery/v2/events.json?countryCode=US&city=#{city_name}&apikey=l1YTnmKzLOimbir2sDgp9G42YeeGkyAj"
 
       info = RestClient.get(url)
       json = JSON.parse(info)
@@ -94,34 +94,37 @@ class CommandLineInterface
     end
 
 
-    def find_user_experience
+    def find_event
       puts "***************************"
-      puts "Lets find a past experence?"
-      puts "Enter name:"
-      past_experience = gets.chomp
-      found_the_past = User.find_by(name: past_experience)
-      puts found_the_past
+      puts "Lets find a past event"
+      puts "Enter name of experence:"
+      @@past_event = gets.chomp
+      found_the_past = Event.includes(name: @@past_event)
+      binding.pry
+      puts "#{found_the_past.kind}"
+      puts "#{found_the_past.location}"
+      puts "#{found_the_past.date}"
     end
 
     def delete_user
       puts "**************************"
       puts "Need to delete a user? :("
       puts "Enter name:"
-
       user_delete = gets.chomp
+
       bye_user = User.find_by(name: user_delete)
-      puts bye_user.destroy
+      bye_user.destroy
       end
 
     def update_user
       puts "**************************"
-      puts "Lets update your name! Enter name:"
-      again_user = gets.chomp
+      puts "Lets update your name!"
       puts "What is your nic-name"
+
       nic_name = gets.chomp
-      update_name = User.find_by(user: again_user)
+      update_name = User.find_by(name: @@name)
       puts update_name.update(name: nic_name)
-      puts "Thanks #{nic_name}! have a fun time!"
+      puts "See you next time!"
     end
   end
 end
