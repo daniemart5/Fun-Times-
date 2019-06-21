@@ -8,4 +8,5 @@ require_relative '../lib/experience'
 require_relative '../lib/user'
 
 ActiveRecord::Base.establish_connection(adapter: 'sqlite3', database: 'db/development.db')
+ActiveRecord::Base.logger = nil
 require_all 'lib'
