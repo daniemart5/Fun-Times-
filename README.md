@@ -1,6 +1,6 @@
 Welcome to Fun-Times!
 
-[https://media.giphy.com/media/KeQAqM3nGr1zkp0347/giphy.gif]
+(https://media.giphy.com/media/KeQAqM3nGr1zkp0347/giphy.gif)
 
 * How to get started:
 
