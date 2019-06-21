@@ -100,10 +100,10 @@ class CommandLineInterface
       puts "Enter name of experence:"
       @@past_event = gets.chomp
       found_the_past = Event.includes(name: @@past_event)
-      binding.pry
-      puts "#{found_the_past.kind}"
-      puts "#{found_the_past.location}"
-      puts "#{found_the_past.date}"
+      # puts "#{found_the_past.kind}"
+      # puts "#{found_the_past.location}"
+      # puts "#{found_the_past.date}"
+      puts "#{found_the_past}"
     end
 
     def delete_user
@@ -113,7 +113,7 @@ class CommandLineInterface
       user_delete = gets.chomp
 
       bye_user = User.find_by(name: user_delete)
-      bye_user.destroy
+      puts "#{bye_user.destroy}"
       end
 
     def update_user
