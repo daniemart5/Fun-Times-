@@ -5,7 +5,7 @@ class CommandLineInterface
     def message
       puts "Welcome to Fun Times!"
       puts "Enter your name to get started:"
-        name = STDIN.gets.chomp
+        name = gets.chomp
         @@user_new = User.create(name: name)
       puts "Welcome #{name}!"
     end
@@ -15,16 +15,17 @@ class CommandLineInterface
       puts "Lets find it :D!"
     end
 
-    def the_question
+    def the_questions
       puts "Which city are you in?"
         city_name = STDIN.gets.chomp.downcase
-        if city_name == nil
+        case city_name
+        when  nil
           puts "Sorry not serving that city :C"
         else
       puts "Awesome ! #{city_name} is a great place! :)"
       puts "Here you go!"
-        end
-      url = "https://app.ticketmaster.com/discovery/v2/events.json?countryCode=US&city=#{city_name}&apikey=l1YTnmKzLOimbir2sDgp9G42YeeGkyAj"
+
+      url = "https://app.ticketmaster.com/discovery/v2/events.json?countryCode=US&city=#{@@city_name}&apikey=l1YTnmKzLOimbir2sDgp9G42YeeGkyAj"
 
       info = RestClient.get(url)
       json = JSON.parse(info)
@@ -42,66 +43,85 @@ class CommandLineInterface
       puts "Date: #{event_date}"
       puts "City: #{event_city}"
       puts "Kind: #{event_kind}"
+      puts "****************************************"
     end
 
     def getting_experiences
-      puts "Want to create an experience?!"
-      answer = STDIN.gets.chomp.downcase
-        if answer == "No"
-          puts " Til next time!"
-          else
-            puts "|---___----___----___----|"
-            puts "What was the event called?"
-            new_event= gets.chomp
+      puts "|---___----___----___----|"
+      puts "Lets create an experience!"
+      puts "What was the event called?"
+      new_event_name = gets.chomp
 
-            puts "What city was #{new_event} in?"
-            new_city = gets.chomp
+      puts "What city was #{new_event_name} in?"
+      new_city = gets.chomp
 
-            puts "When was #{new_event}?"
-            new_date = gets.chomp
+      puts "When was #{new_event_name}?"
+      new_date = gets.chomp
 
-            puts "What kind of event was it?"
-            new_kind = gets.chomp
-            @@new_event = Event.create(name: new_event, location: new_city, date: new_date, kind: new_kind)
+      puts "What kind of event was it?"
+      new_kind = gets.chomp
 
-            puts "Now lets make a review!"
-            puts "What did you like?"
-            review = gets.chomp
+      @@create_event = Event.create(name: new_event_name, location: new_city, date: new_date, kind: new_kind)
 
-            puts "From 0: 'Horrible maaaan' to 5: 'The best in the whole world!' what was the experience like?"
-            rating = gets.chomp
+    def review
+      puts "Now lets make a review!"
+      puts "What did you like?"
+      review = gets.chomp
 
-            puts "True or False: Would you do it again?"
-            doAgain = gets.chomp
+      puts "From 0: 'Horrible maaaan' to 5: 'The best in the whole world!' what was the experience like?"
+      rating = gets.chomp
 
-            puts "Thanks friend! See you again!"
-            puts "|---___----___----___----___|"
-          end
-          experience_new = Experience.create(event: @@new_event, user: @@user_new, review: review, rating: rating, doAgain: doAgain)
-        end
+      puts "True or False: Would you do it again?"
+      doAgain = gets.chomp
+      puts "Thanks friend!!"
+      puts "|---___----___----___----___|"
+      experience_new = Experience.create(event: @@create_event, user: @@user_new, review: review, rating: rating, doAgain: doAgain)
       end
-    def find_user
-      puts "Want to find a user?"
-          answer = STDIN.gets.chomp.downcase
-        if answer == "no"
-          puts "Til next time!"
-
-      puts "Enter name:"
-        name_of_user = gets.chomp
-        found = User.find_by(name: name_of_user)
-        puts "Here you go!"
-        puts found
     end
+
+    def find_user
+      # puts "Want to find a user?"
+      #     answer = STDIN.gets.chomp.downcase
+      #       if answer == "no"
+      #       return "Til next time!"
+      #   else
+      puts "***************************"
+      puts "Find user! Enter name:"
+      name_of_user = gets.chomp
+      found = User.find_by(name: name_of_user)
+      puts  "Here you go!"
+      puts found
+    end
+
+
     def find_user_experience
-      puts "Want to find a past experence?"
-        answer = STDIN.gets.chomp.downcase
-      if answer == "no"
-        puts "Til next time!"
-      else
-        puts "Enter name:"
-        past_experience = gets.chomp
-        found_the_past = User.find_by(name: past_experience)
-        puts found_the_past
+      puts "***************************"
+      puts "Lets find a past experence?"
+      puts "Enter name:"
+      past_experience = gets.chomp
+      found_the_past = User.find_by(name: past_experience)
+      puts found_the_past
+    end
+
+    def delete_user
+      puts "**************************"
+      puts "Need to delete a user? :("
+      puts "Enter name:"
+
+      user_delete = gets.chomp
+      bye_user = User.find_by(name: user_delete)
+      puts bye_user.destroy
       end
+
+    def update_user
+      puts "**************************"
+      puts "Lets update your name! Enter name:"
+      again_user = gets.chomp
+      puts "What is your nic-name"
+      nic_name = gets.chomp
+      update_name = User.find_by(user: again_user)
+      puts update_name.update(name: nic_name)
+      puts "Thanks #{nic_name}! have a fun time!"
     end
   end
+end
